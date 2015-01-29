@@ -1,11 +1,10 @@
+#!/usr/bin/env python
 # coding: utf-8
-
 
 import ConfigParser
 import json
 import os
 import shutil
-import sys
 import argparse
 import re
 

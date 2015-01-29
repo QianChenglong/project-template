@@ -10,6 +10,16 @@ macro(config_cmake)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin)
 endmacro()
 
+macro(config_compiler_and_linke)
+    if (MSVC)
+        vc_ignore_warnings(
+            4819 # 代码页编码错误
+            4996 # stdio.h,  string.h等C可能不安全
+            4800 # int转bool
+            )
+    endif(MSVC)
+endmacro(config_compiler_and_linker)
+
 function(cxx_shared_library name)
   add_library(${name} SHARED ${ARGN})
 endfunction()
@@ -24,7 +34,7 @@ function(cxx_library name)
 endfunction()
 
 # 使用第三方库，添加include路径，lib路径
-function(use_libraries)
+function(use_3rd_libraries)
     foreach(name ${ARGN})
         if(${name} STREQUAL ".")
             include_directories(${PROJECT_SOURCE_DIR}/include)
@@ -35,6 +45,12 @@ function(use_libraries)
         endif()
     endforeach()
 endfunction()
+
+# 使用库，库路径不在当前项目内
+function(use_library name)
+    include_directories(${name}/include)
+    link_directories(${name}/lib)
+endfunction(use_library)
 
 # 单元测试需要链接的库
 function(utest_link_libraries)
@@ -50,8 +66,8 @@ function(add_utest name)
     add_test(${PROJECT_NAME} ${TESTCASE})
 endfunction()
 
-# 忽略指定警告
-function(ignore_warnings)
+# vc忽略指定警告
+function(vc_ignore_warnings)
     foreach(num ${ARGN})
         add_definitions(/wd"${num}")
     endforeach()

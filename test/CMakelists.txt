@@ -1,6 +1,6 @@
 enable_testing()
 
-use_libraries(gtest-1.7.0-lib-msvcprt)
+use_3rd_libraries(gtest-1.7.0-lib-msvcprt)
 
 utest_link_libraries(gtest gtest_main)
 
