@@ -10,7 +10,7 @@ macro(config_cmake)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin)
 endmacro()
 
-macro(config_compiler_and_linke)
+macro(config_compiler_and_linker)
     if (MSVC)
         vc_ignore_warnings(
             4819 # 代码页编码错误
